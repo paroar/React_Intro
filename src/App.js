@@ -1,30 +1,16 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
-class App extends Component {
-
-  tasks = [
+const app = props => {
+  const [tasks, setTasks] = useState([
     { id: 1, name: "Ir a clase", completed: false },
     { id: 2, name: "Descansar", completed: true }
-  ];
+  ]);
 
-  render() {
-    return (
-      <div className="App">
-        <h2>Todo List</h2>
-        <ul>
-          {this.tasksList()}
-        </ul>
-        <input id="input-add" type="text" placeholder="Task here..." />
-        <button onClick={this.addTask}>Add</button>
-      </div>
-    );
-  }
-
-  tasksList() {
+  const tasksList = (props) => {
     return (
       <>
-        {this.tasks.map(
+        {props.map(
           ({ id, name, completed }) =>
             <>
               <li key={id}><input type="checkbox" />{name}</li>
@@ -34,11 +20,28 @@ class App extends Component {
     )
   }
 
-  addTask() {
-    const input = document.querySelector("#input-add").value;
-    this.tasks.push({ id: this.tasks.length, name: input, completed: false });
+  const addTask = () => {
+
+    const input = document.querySelector("#input-add");
+    setTasks(tasks.concat(
+      { id: tasks.length, name: input.value, completed: false }
+    ));
   }
+
+  return (
+    <div className="App">
+      <h2>Todo List</h2>
+      <ul>
+        {tasksList(tasks)}
+      </ul>
+      <input id="input-add" type="text" placeholder="Task here..." />
+      <button onClick={addTask}>Add</button>
+    </div>
+  );
+
+
 }
 
 
-export { App };
+
+export { app };
