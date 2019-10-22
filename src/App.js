@@ -1,47 +1,27 @@
 import React, { useState } from 'react';
 import './App.css';
+import AddTasks from './AddTasks';
+import TaskList from './TaskList';
 
-const app = props => {
-  const [tasks, setTasks] = useState([
-    { id: 1, name: "Ir a clase", completed: false },
-    { id: 2, name: "Descansar", completed: true }
-  ]);
+const initialTasks = [
+  { id: 0, name: "Ir a clase" },
+  { id: 1, name: "Descansar" }
+]
 
-  const tasksList = (props) => {
-    return (
-      <>
-        {props.map(
-          ({ id, name, completed }) =>
-            <>
-              <li key={id}><input type="checkbox" />{name}</li>
-            </>
-        )}
-      </>
-    )
-  }
+function App() {
 
-  const addTask = () => {
+  const [tasks, setTasks] = useState(initialTasks);
 
-    const input = document.querySelector("#input-add");
-    setTasks(tasks.concat(
-      { id: tasks.length, name: input.value, completed: false }
-    ));
-  }
+  const addTask = taskName => setTasks(
+    tasks.concat({id: tasks.length, name:taskName})
+  )
 
   return (
-    <div className="App">
-      <h2>Todo List</h2>
-      <ul>
-        {tasksList(tasks)}
-      </ul>
-      <input id="input-add" type="text" placeholder="Task here..." />
-      <button onClick={addTask}>Add</button>
-    </div>
-  );
-
-
+    <>
+      <AddTasks addTask={addTask}></AddTasks>
+      <TaskList tasks={tasks}></TaskList>
+    </>
+  )
 }
 
-
-
-export { app };
+export default App;
