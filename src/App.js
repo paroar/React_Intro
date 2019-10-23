@@ -13,13 +13,17 @@ function App() {
   const [tasks, setTasks] = useState(initialTasks);
 
   const addTask = taskName => setTasks(
-    tasks.concat({id: tasks.length, name:taskName})
+    tasks.concat({ id: tasks.length, name: taskName })
+  )
+
+  const deleteTask = taskId => setTasks(
+    tasks.filter(task => task.id != taskId)
   )
 
   return (
     <>
       <AddTasks addTask={addTask}></AddTasks>
-      <TaskList tasks={tasks}></TaskList>
+      <TaskList tasks={tasks} deleteTask={deleteTask}></TaskList>
     </>
   )
 }
